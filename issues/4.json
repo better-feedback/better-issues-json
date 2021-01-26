@@ -30,8 +30,8 @@
   "performed_via_github_app": null,
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
-  "title": "The app fails to build the master list of issues if there are less than 2 issues in /issues",
-  "updated_at": "2021-01-26T19:52:48Z",
+  "title": "App fails to build master list of issues if there are less than 2 issues in /issues",
+  "updated_at": "2021-01-26T19:54:47Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/4",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
