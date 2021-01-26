@@ -1,0 +1,48 @@
+name: Save issues as a json file
+on:
+  issues:
+    types:
+      [
+        opened,
+        edited,
+        closed,
+        deleted,
+        reopened,
+        labeled,
+        unlabeled,
+        locked,
+        unlocked,
+        milestoned,
+        demilestoned,
+      ]
+jobs:
+  writeIssueToJson:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      - name: Write issue to file
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: issues/${{github.event.issue.number}}.json
+          contents: |
+            ${{ toJson(github.event.issue) }}
+          write-mode: overwrite
+      - name: Add & commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git diff --quiet && git diff --staged --quiet || git commit -am "${{ github.event.action }} issue ${{github.event.issue.number}}.json"
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.extract_branch.outputs.branch }}
