@@ -52,27 +52,37 @@ export const Home = (props): JSX.Element => {
         </a>
       </div>
       <div className="grid w-5/6 grid-cols-1 gap-4 text-gray-800 md:grid-cols-3 issue rounded-xl">
-        <div className="flex-row self-start p-6 bg-white shadow-lg rounded-xl">
-          <h3 className="block mb-2 text-xl font-medium issue__main-title">
+        <div className="relative flex-row self-start bg-white shadow-lg rounded-xl">
+          <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-blue-100 issue__main-title rounded-xl">
             Planned
-          </h3>
-          <IssueList
-            issues={filterByLabel(props.allItems, "status: planned")}
-          />
+          </div>
+          <div className="p-4 pt-0">
+            <IssueList
+              issues={filterByLabel(props.allItems, "status: planned")}
+            />
+          </div>
         </div>
 
-        <div className="flex-row self-start p-6 bg-white shadow-lg rounded-xl">
-          <h3 className="block mb-2 text-xl font-medium issue__main-title">
+        <div className="flex-row self-start bg-white shadow-lg rounded-xl">
+          <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-yellow-200 issue__main-title rounded-xl">
             In Progress
-          </h3>
-          <IssueList issues={props.allItems} />
+          </div>
+          <div className="p-4 pt-0">
+            <IssueList
+              issues={filterByLabel(props.allItems, "status: in progress")}
+            />
+          </div>
         </div>
 
-        <div className="flex-row self-start p-6 bg-white shadow-lg rounded-xl">
-          <h3 className="block mb-2 text-xl font-medium issue__main-title">
+        <div className="flex-row self-start bg-white shadow-lg rounded-xl">
+          <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-green-200 issue__main-title rounded-xl">
             Completed
-          </h3>
-          <IssueList issues={props.allItems} />
+          </div>
+          <div className="p-4 pt-0">
+            <IssueList
+              issues={filterByLabel(props.allItems, "status: completed")}
+            />
+          </div>
         </div>
       </div>
     </Layout>
