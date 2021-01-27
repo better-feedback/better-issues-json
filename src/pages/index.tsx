@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 
 export const Home = (props): JSX.Element => {
   return (
-    <Layout>
+    <Layout siteTitle={props.siteTitle}>
       <section>
         <IssueList allIssues={props.allItems} />
       </section>
@@ -32,7 +32,7 @@ export async function getStaticProps() {
   return {
     props: {
       allItems: items,
-      title: siteConfig.default.title,
+      siteTitle: siteConfig.default.title,
       description: siteConfig.default.description,
     },
   };
