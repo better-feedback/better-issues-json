@@ -11,7 +11,26 @@
   "events_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/7/events",
   "html_url": "https://github.com/better-feedback/better-issues-json/issues/7",
   "id": 795001155,
-  "labels": [],
+  "labels": [
+    {
+      "color": "FBCA04",
+      "default": false,
+      "description": "",
+      "id": 2691454723,
+      "name": "status: in progress",
+      "node_id": "MDU6TGFiZWwyNjkxNDU0NzIz",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/status:%20in%20progress"
+    },
+    {
+      "color": "d73a4a",
+      "default": false,
+      "description": "Something isn't working",
+      "id": 2690041035,
+      "name": "type: bug",
+      "node_id": "MDU6TGFiZWwyNjkwMDQxMDM1",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/type:%20bug"
+    }
+  ],
   "labels_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/7/labels{/name}",
   "locked": false,
   "milestone": null,
@@ -21,7 +40,7 @@
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
   "title": "Creating an issue with multiple gh action triggers",
-  "updated_at": "2021-01-27T11:04:47Z",
+  "updated_at": "2021-01-27T11:05:31Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/7",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
