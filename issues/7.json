@@ -39,8 +39,8 @@
   "performed_via_github_app": null,
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
-  "title": "Creating an issue with multiple gh action triggers",
-  "updated_at": "2021-01-27T11:05:31Z",
+  "title": "Multiple \"update issue\" triggers fire simultaneously in certain cases",
+  "updated_at": "2021-01-27T11:06:47Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/7",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
