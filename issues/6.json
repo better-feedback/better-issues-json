@@ -17,9 +17,9 @@
       "default": false,
       "description": "",
       "id": 2691454992,
-      "name": "Status: Completed",
+      "name": "status: completed",
       "node_id": "MDU6TGFiZWwyNjkxNDU0OTky",
-      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/Status:%20Completed"
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/status:%20completed"
     },
     {
       "color": "a2eeef",
@@ -39,8 +39,8 @@
   "performed_via_github_app": null,
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
-  "title": "Create a POC that uses Github issues as a source",
-  "updated_at": "2021-01-27T11:00:54Z",
+  "title": "Create a POC that uses Github issues as a source of content",
+  "updated_at": "2021-01-27T11:02:54Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/6",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
