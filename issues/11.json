@@ -51,7 +51,26 @@
   "events_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/11/events",
   "html_url": "https://github.com/better-feedback/better-issues-json/issues/11",
   "id": 795499733,
-  "labels": [],
+  "labels": [
+    {
+      "color": "8BC7B2",
+      "default": false,
+      "description": "",
+      "id": 2691454297,
+      "name": "status: planned",
+      "node_id": "MDU6TGFiZWwyNjkxNDU0Mjk3",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/status:%20planned"
+    },
+    {
+      "color": "d73a4a",
+      "default": false,
+      "description": "Something isn't working",
+      "id": 2690041035,
+      "name": "type: bug",
+      "node_id": "MDU6TGFiZWwyNjkwMDQxMDM1",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/type:%20bug"
+    }
+  ],
   "labels_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/11/labels{/name}",
   "locked": false,
   "milestone": null,
@@ -60,8 +79,8 @@
   "performed_via_github_app": null,
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
-  "title": "[Bug] The issue type in the issue-specific pages is still a placeholder",
-  "updated_at": "2021-01-27T22:38:17Z",
+  "title": "[Bug] The issue type in the issue-specific pages is a placeholder, replace with actual code",
+  "updated_at": "2021-01-27T22:39:40Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/11",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
