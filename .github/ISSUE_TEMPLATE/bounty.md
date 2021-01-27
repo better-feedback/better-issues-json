@@ -1,8 +1,8 @@
 ---
 name: Bounty
 about: Bounty for the community developers
-title: '[Bounty] '
-labels: 'Bounty: Open'
+title: "[Bounty] "
+labels: "Bounty: Open"
 assignees:
 ---
 
@@ -25,13 +25,12 @@ assignees:
   - [ ] Other
     - [ ] /_List it here_/
 - Time Commitment
-  - [x] *PLACEHOLDER*
+  - [x] _PLACEHOLDER_
 - Bounty Size
-  - [x] *PLACEHOLDER*
+  - [x] _PLACEHOLDER_
 
 ## Part 1: Problem Description
 
 ## Part 2: Resources
 
 ## Part 3: Contact and Support
-
