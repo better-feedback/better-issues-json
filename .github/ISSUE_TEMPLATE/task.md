@@ -1,9 +1,9 @@
 ---
 name: Task
 about: Non-coding task
-title: '[Task] '
+title: "[Task] "
 labels: Non-Coding Task
-assignees: ''
+assignees: ""
 ---
 
 ## Introduction and Background
