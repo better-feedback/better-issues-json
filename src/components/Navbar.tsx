@@ -1,17 +1,20 @@
+import Link from "next/link";
 import Logo from "./svg/Logo";
 
 export const Header = (): JSX.Element => {
   return (
     <header className="mb-6 shadow-lg bg-better-white body-font">
       <div className="container flex flex-col flex-wrap p-2 mx-auto md:items-center md:flex-row ">
-        <a className="flex items-center w-40 mb-4 mr-2 text-xl font-bold text-better-violet font-poppins title-font md:mb-0">
-          <Logo
-            style={{ height: "56px", width: "56px" }}
-            blendMode1="darken"
-            blendMode2="multiply"
-          />
-          Better
-        </a>
+        <Link href={{ pathname: `/` }}>
+          <a className="flex items-center w-40 mb-4 mr-2 text-2xl font-bold text-better-violet font-poppins title-font md:mb-0">
+            <Logo
+              style={{ height: "56px", width: "56px" }}
+              blendMode1="darken"
+              blendMode2="multiply"
+            />
+            Better
+          </a>
+        </Link>
         <nav className="flex flex-wrap items-center justify-center space-x-10 text-gray-600">
           <a
             href="#"
