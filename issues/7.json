@@ -3,7 +3,7 @@
   "assignee": null,
   "assignees": [],
   "author_association": "CONTRIBUTOR",
-  "body": "Currently it is possible for a gh action to be triggered multiple times simultaneously if more than one of the relevant triggers are met (e.g. an issue is created WITH a label, since both issue creation and labelling are action triggers).",
+  "body": "Currently it is possible for a gh action to be triggered multiple times simultaneously if more than one of the relevant triggers are met (e.g. an issue is created WITH a label, since both issue creation and labelling are action triggers, or if multiple labels are applied (apparently this triggers the `labeled` event twice).\r\n\r\nI did some research and it appears this is a relatively common issue some people who use actions as build tools face, but there is no solution built into GH Actions itself. This project / set of custom actions seems like it could help:\r\nhttps://github.com/softprops/turnstyle ",
   "closed_at": null,
   "comments": 0,
   "comments_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/7/comments",
@@ -40,7 +40,7 @@
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
   "title": "Multiple \"update issue\" triggers fire simultaneously in certain cases",
-  "updated_at": "2021-01-27T11:06:47Z",
+  "updated_at": "2021-01-27T13:17:40Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/7",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
