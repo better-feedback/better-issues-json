@@ -11,7 +11,26 @@
   "events_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/2/events",
   "html_url": "https://github.com/better-feedback/better-issues-json/issues/2",
   "id": 794506806,
-  "labels": [],
+  "labels": [
+    {
+      "color": "8BC7B2",
+      "default": false,
+      "description": "",
+      "id": 2691454297,
+      "name": "status: planned",
+      "node_id": "MDU6TGFiZWwyNjkxNDU0Mjk3",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/status:%20planned"
+    },
+    {
+      "color": "a2eeef",
+      "default": false,
+      "description": "New feature or request",
+      "id": 2690041044,
+      "name": "type: feature request",
+      "node_id": "MDU6TGFiZWwyNjkwMDQxMDQ0",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/type:%20feature%20request"
+    }
+  ],
   "labels_url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/2/labels{/name}",
   "locked": false,
   "milestone": null,
@@ -21,7 +40,7 @@
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
   "title": "Set up issue templates",
-  "updated_at": "2021-01-26T19:38:22Z",
+  "updated_at": "2021-01-27T11:55:29Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/2",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
