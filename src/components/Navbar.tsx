@@ -4,18 +4,18 @@ import Logo from "./svg/Logo";
 export const Header = (): JSX.Element => {
   return (
     <header className="mb-6 shadow-lg bg-better-white body-font">
-      <div className="container flex flex-col flex-wrap p-2 mx-auto md:items-center md:flex-row ">
+      <div className="container flex flex-row flex-wrap items-center p-2 mx-auto">
         <Link href={{ pathname: `/` }}>
-          <a className="flex items-center w-40 mb-4 mr-2 text-2xl font-bold text-better-violet font-poppins title-font md:mb-0">
+          <a className="flex items-center w-40 mr-2 text-2xl font-bold md:w-40 text-better-violet font-poppins title-font">
             <Logo
-              style={{ height: "56px", width: "56px" }}
+              style={{ height: "56px" }}
               blendMode1="darken"
               blendMode2="multiply"
             />
-            Better
+            <span className="hidden md:inline">Better</span>
           </a>
         </Link>
-        <nav className="flex flex-wrap items-center justify-center space-x-10 text-gray-600">
+        <nav className="flex items-center justify-center ml-8 space-x-10 text-gray-600">
           <a
             href="#"
             className="text-sm font-semibold rounded-xl hover:text-better-black"
@@ -32,7 +32,7 @@ export const Header = (): JSX.Element => {
                 clipRule="evenodd"
               />
             </svg>
-            Roadmap
+            <span className="hidden md:inline">Roadmap</span>
           </a>
           <a
             href="#"
@@ -50,13 +50,12 @@ export const Header = (): JSX.Element => {
                 clipRule="evenodd"
               />
             </svg>
-            Issues
+            <span className="hidden md:inline">Issues</span>
           </a>
         </nav>
-        <div className="flex ml-auto">
+        <div className="flex items-center ml-auto">
           <button
-            className="flex ml-3 text-sm rounded-full bg-better-violet focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-            id="user-menu"
+            className="flex h-6 ml-3 text-sm rounded-full bg-better-violet focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             aria-haspopup="true"
           >
             <span className="sr-only">Open user menu</span>
