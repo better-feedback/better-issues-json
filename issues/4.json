@@ -13,6 +13,15 @@
   "id": 794515696,
   "labels": [
     {
+      "color": "8BC7B2",
+      "default": false,
+      "description": "",
+      "id": 2691454297,
+      "name": "Status: Planned",
+      "node_id": "MDU6TGFiZWwyNjkxNDU0Mjk3",
+      "url": "https://api.github.com/repos/better-feedback/better-issues-json/labels/Status:%20Planned"
+    },
+    {
       "color": "d73a4a",
       "default": false,
       "description": "Something isn't working",
@@ -31,7 +40,7 @@
   "repository_url": "https://api.github.com/repos/better-feedback/better-issues-json",
   "state": "open",
   "title": "App fails to build master list of issues if there are less than 2 issues in /issues",
-  "updated_at": "2021-01-26T19:54:47Z",
+  "updated_at": "2021-01-27T10:54:18Z",
   "url": "https://api.github.com/repos/better-feedback/better-issues-json/issues/4",
   "user": {
     "avatar_url": "https://avatars.githubusercontent.com/u/27592?v=4",
