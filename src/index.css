@@ -13,3 +13,10 @@ pre code {
 code {
   @apply px-1 py-0.5 text-xs bg-gray-50;
 }
+
+html, body { height: 100%; }
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: 100%;
+}

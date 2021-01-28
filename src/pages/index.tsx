@@ -1,5 +1,6 @@
 import IssueList from "../components/IssueList";
 import Layout from "../components/Layout";
+import { Octokit } from "@octokit/rest";
 
 export const Home = (props): JSX.Element => {
   function filterByLabel(issues, labelValue: string) {
@@ -91,24 +92,22 @@ export const Home = (props): JSX.Element => {
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const siteConfig = await import(`../data/config.json`);
-  //get posts & context from folder
-  const items = ((context) => {
-    const keys = context.keys();
-    const values = keys.map(context);
 
-    const data = keys.map((key, index) => {
-      return {
-        ...(values[index] as Record<string, unknown>),
-      };
-    });
-    return data;
-  })(require.context("../../issues", true, /\.json$/));
+  const octokit = new Octokit({
+    auth: "e7baad8934817bf76247f486fe6e2a6b64509ea5",
+  });
 
+  const result = await octokit.issues.listForRepo({
+    owner: "better-feedback",
+    repo: "better-issues-json",
+  });
+
+  const repoIssues = result.data;
   return {
     props: {
-      allItems: items,
+      allItems: repoIssues,
       siteTitle: siteConfig.default.title,
       description: siteConfig.default.description,
       projectRepo: siteConfig.default.repositoryUrl,
