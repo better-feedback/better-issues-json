@@ -4,7 +4,7 @@ export const IssueTags = (props): JSX.Element => {
     <>
       {props.tags.map((tag, i) => (
         <span
-          className="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded-3xl"
+          className="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded-full"
           key={i}
         >
           {tag.name}

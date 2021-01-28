@@ -1,6 +1,6 @@
 import IssueList from "../components/IssueList";
 import Layout from "../components/Layout";
-import { Octokit } from "@octokit/rest";
+import { github } from "../utils/api";
 
 export const Home = (props): JSX.Element => {
   function filterByLabel(issues, labelValue: string) {
@@ -95,13 +95,9 @@ export default Home;
 export async function getServerSideProps() {
   const siteConfig = await import(`../data/config.json`);
 
-  const octokit = new Octokit({
-    auth: "e7baad8934817bf76247f486fe6e2a6b64509ea5",
-  });
-
-  const result = await octokit.issues.listForRepo({
-    owner: "better-feedback",
-    repo: "better-issues-json",
+  const result = await github.issues.listForRepo({
+    owner: siteConfig.projectOrg,
+    repo: siteConfig.projectRepo,
   });
 
   const repoIssues = result.data;

@@ -1,7 +1,8 @@
 import Layout from "../../components/Layout";
 import IssueTags from "../../components/IssueTags";
 import ReactMarkdown from "react-markdown";
-import { Octokit } from "@octokit/rest";
+// import { Octokit } from "@octokit/rest";
+import { github } from "../../utils/api";
 
 export const IssueTemplate = (props): JSX.Element => {
   if (!props.issueData) return <>Error when fetching / rendering issue</>;
@@ -111,13 +112,9 @@ export async function getServerSideProps({ ...ctx }) {
 
   const siteConfig = await import(`../../data/config.json`);
 
-  const octokit = new Octokit({
-    auth: "e7baad8934817bf76247f486fe6e2a6b64509ea5",
-  });
-
-  const result = await octokit.issues.get({
-    owner: "better-feedback",
-    repo: "better-issues-json",
+  const result = await github.issues.get({
+    owner: siteConfig.projectOrg,
+    repo: siteConfig.projectRepo,
     issue_number: slug,
   });
 
