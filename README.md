@@ -39,3 +39,8 @@ Test:
 ```
 yarn test
 ```
+
+## Set env vars
+
+Create a copy `.env` and name it `.env.local`.
+Set environmental variables in `.env.local`.
