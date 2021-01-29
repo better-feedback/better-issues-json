@@ -2,7 +2,7 @@
 name: Bug
 about: Report a bug
 title: "[Bug] "
-labels: "Type: Bug"
+labels: "status: open, type: bug"
 assignees: seichris, isidorosp
 ---
 

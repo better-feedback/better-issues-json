@@ -1,8 +1,8 @@
 ---
-name: Task
-about: Non-coding task
-title: "[Task] "
-labels: "status: open, type: task, fundable"
+name: Other
+about: Something that doesn't fit into a specific category
+title: "[Other] "
+labels: "status: open, type: other, fundable"
 assignees: ""
 ---
 
