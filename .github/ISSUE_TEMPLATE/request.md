@@ -1,8 +1,8 @@
 ---
 name: Request
 about: Request a new feature
-title: "[Request] "
-labels: "Request: Draft"
+title: "[Req] "
+labels: "status: open, type: feature request, fundable"
 assignees:
 ---
 
