@@ -42,46 +42,52 @@ export const Issues = (props): JSX.Element => {
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
                         {props.issues.length > 0 &&
-                          props.issues.map((issue) => (
-                            <tr key={issue.id}>
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="text-sm font-semibold">
-                                  <Link
-                                    key={issue.id}
-                                    href={{
-                                      pathname: `/issue/${issue.number}`,
-                                    }}
-                                  >
-                                    {truncateText(issue.title, 180)}
-                                  </Link>
-                                </div>
-                                <div className="flex justify-between mt-1 text-xs font-medium text-gray-400 uppercase">
-                                  <div>
+                          props.issues.map(
+                            (issue) =>
+                              !issue.pull_request && (
+                                <tr key={issue.id}>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm font-semibold">
+                                      <Link
+                                        key={issue.id}
+                                        href={{
+                                          pathname: `/issue/${issue.number}`,
+                                        }}
+                                      >
+                                        {truncateText(issue.title, 180)}
+                                      </Link>
+                                    </div>
+                                    <div className="flex justify-between mt-1 text-xs font-medium text-gray-400 uppercase">
+                                      <div>
+                                        {getFirstMatchingLabel(
+                                          issue.labels,
+                                          "type:"
+                                        )}
+                                      </div>
+                                      <div className="relative w-1/3">
+                                        <div className="flex h-2 mb-4 overflow-hidden text-xs rounded bg-better-red bg-opacity-20">
+                                          <div
+                                            style={{ width: "30%" }}
+                                            className="flex flex-col justify-center text-center text-white shadow-none bg-better-red bg-opacity-40 whitespace-nowrap"
+                                          ></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-xs font-medium text-gray-500 capitalize whitespace-nowrap">
                                     {getFirstMatchingLabel(
                                       issue.labels,
-                                      "type:"
+                                      "status:"
                                     )}
-                                  </div>
-                                  <div className="relative w-1/3">
-                                    <div className="flex h-2 mb-4 overflow-hidden text-xs rounded bg-better-red bg-opacity-20">
-                                      <div
-                                        style={{ width: "30%" }}
-                                        className="flex flex-col justify-center text-center text-white shadow-none bg-better-red bg-opacity-40 whitespace-nowrap"
-                                      ></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 text-xs font-medium text-gray-500 capitalize whitespace-nowrap">
-                                {getFirstMatchingLabel(issue.labels, "status:")}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <span className="inline-flex px-2 text-xs font-medium text-gray-500 capitalize rounded-full">
-                                  {issue.state}
-                                </span>
-                              </td>
-                            </tr>
-                          ))}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <span className="inline-flex px-2 text-xs font-medium text-gray-500 capitalize rounded-full">
+                                      {issue.state}
+                                    </span>
+                                  </td>
+                                </tr>
+                              )
+                          )}
                       </tbody>
                     </table>
                   </div>
@@ -103,6 +109,7 @@ export async function getServerSideProps() {
   const result = await github.issues.listForRepo({
     owner: siteConfig.projectOrg,
     repo: siteConfig.projectRepo,
+    state: "all",
   });
 
   const repoIssues = result.data;

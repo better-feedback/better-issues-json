@@ -1054,15 +1054,6 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@pedrouid/iso-crypto@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@pedrouid/iso-crypto/-/iso-crypto-1.0.0.tgz#cf06b40ef3da3d7ca7363bd7a521ed59fa2fd13d"
-  integrity sha512-gSz/81Cz2n9p1RHalxN8STtOHg6Dqa+l2Phz36GptpneAcAwOzPmty7FSg58htF4u9V44vEXsc7L8V9ze9j4Xg==
-  dependencies:
-    aes-js "^3.1.2"
-    enc-utils "^3.0.0"
-    hash.js "^1.1.7"
-    randombytes "^2.1.0"
 "@octokit/auth-token@^2.4.4":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@octokit/auth-token/-/auth-token-2.4.5.tgz#568ccfb8cb46f36441fac094ce34f7a875b197f3"
@@ -1165,6 +1156,16 @@
   dependencies:
     "@octokit/openapi-types" "^3.3.0"
     "@types/node" ">= 8"
+
+"@pedrouid/iso-crypto@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pedrouid/iso-crypto/-/iso-crypto-1.0.0.tgz#cf06b40ef3da3d7ca7363bd7a521ed59fa2fd13d"
+  integrity sha512-gSz/81Cz2n9p1RHalxN8STtOHg6Dqa+l2Phz36GptpneAcAwOzPmty7FSg58htF4u9V44vEXsc7L8V9ze9j4Xg==
+  dependencies:
+    aes-js "^3.1.2"
+    enc-utils "^3.0.0"
+    hash.js "^1.1.7"
+    randombytes "^2.1.0"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
@@ -2236,6 +2237,11 @@ bech32@1.1.4:
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
   integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
 
+before-after-hook@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.1.0.tgz#b6c03487f44e24200dd30ca5e6a1979c5d2fb635"
+  integrity sha512-IWIbu7pMqyw3EAJHzzHbWa85b6oud/yfKYg5rqB5hNE8CeMi3nX+2C2sj0HswfblST86hpVEOAb9x34NZd6P7A==
+
 better-sqlite3@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-7.1.2.tgz#95565757a834093f1ecae0d4457f60820ed5dd2a"
@@ -2244,10 +2250,6 @@ better-sqlite3@^7.1.2:
     bindings "^1.5.0"
     prebuild-install "^5.3.3"
     tar "^6.0.5"
-before-after-hook@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.1.0.tgz#b6c03487f44e24200dd30ca5e6a1979c5d2fb635"
-  integrity sha512-IWIbu7pMqyw3EAJHzzHbWa85b6oud/yfKYg5rqB5hNE8CeMi3nX+2C2sj0HswfblST86hpVEOAb9x34NZd6P7A==
 
 big.js@^5.2.2:
   version "5.2.2"

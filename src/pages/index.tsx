@@ -98,6 +98,7 @@ export async function getServerSideProps() {
   const result = await github.issues.listForRepo({
     owner: siteConfig.projectOrg,
     repo: siteConfig.projectRepo,
+    state: "all",
   });
 
   const repoIssues = result.data;
