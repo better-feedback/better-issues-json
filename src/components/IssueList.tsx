@@ -1,26 +1,8 @@
 import Link from "next/link";
+import { truncateText } from "../utils/text";
+import { getFirstMatchingLabel } from "../utils/issue";
 
 const IssueList = (props) => {
-  // TODO: Move these to a common utils file
-  function truncateText(content: string, length: number): string {
-    if (content.length > length) {
-      return content.slice(0, length).trimEnd() + "...";
-    }
-    return content;
-  }
-
-  function getFirstMatchingLabel(labels, labelValue): string | null {
-    if (labels.length > 0) {
-      const resultLabel = labels.filter((label) => {
-        return label.name.includes(labelValue);
-      });
-
-      if (resultLabel.length > 0) {
-        return resultLabel[0].name.replace(labelValue, "").trim();
-      }
-    }
-    return null;
-  }
   // function reformatDate(fullDate) {
   //   const date = new Date(fullDate);
   //   return date.toDateString().slice(4);

@@ -3,13 +3,23 @@
 @tailwind utilities;
 
 blockquote {
-  @apply block p-2 pl-4 ml-1 text-xs border-l-4 border-gray-300 bg-gray-50;
+  @apply block p-2 pl-4 ml-1 text-xs bg-gray-100 border-l-4 border-gray-300;
 }
 
 pre code {
-  @apply block p-4 m-1 text-xs rounded bg-gray-50;
+  @apply block p-4 m-1 text-xs bg-gray-100 rounded;
 }
 
 code {
-  @apply px-1 py-0.5 text-xs bg-gray-50;
+  @apply px-1 py-0.5 text-xs bg-gray-100;
+}
+
+html,
+body {
+  height: 100%;
+}
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: 100%;
 }

@@ -1,10 +1,11 @@
-import glob from "glob";
 import Layout from "../../components/Layout";
 import IssueTags from "../../components/IssueTags";
 import ReactMarkdown from "react-markdown";
+// import { Octokit } from "@octokit/rest";
+import { github } from "../../utils/api";
 
 export const IssueTemplate = (props): JSX.Element => {
-  if (!props.issueData) return <></>;
+  if (!props.issueData) return <>Error when fetching / rendering issue</>;
 
   return (
     <Layout siteTitle={props.siteTitle}>
@@ -106,32 +107,25 @@ export const IssueTemplate = (props): JSX.Element => {
 
 export default IssueTemplate;
 
-export async function getStaticProps({ ...ctx }) {
+export async function getServerSideProps({ ...ctx }) {
   const { slug } = ctx.params;
-  const content = await import(`../../../issues/${slug}.json`);
-  const config = await import(`../../data/config.json`);
+
+  const siteConfig = await import(`../../data/config.json`);
+
+  const result = await github.issues.get({
+    owner: siteConfig.projectOrg,
+    repo: siteConfig.projectRepo,
+    issue_number: slug,
+  });
+
+  const repoIssue = result.data;
 
   return {
     props: {
-      siteTitle: config.title,
-      issueData: { ...content },
+      issueData: repoIssue,
+      siteTitle: siteConfig.default.title,
+      description: siteConfig.default.description,
+      projectRepo: siteConfig.default.repositoryUrl,
     },
-  };
-}
-
-export async function getStaticPaths() {
-  //get all .md files in the posts dir
-  const issues = glob.sync("./issues/**/*.json");
-
-  //remove path and extension to leave slug only
-  const issueSlugs = issues.map((filename: string) =>
-    filename.split("/")[2].slice(0, -5).trim()
-  );
-
-  // create paths with `slug` param
-  const paths = issueSlugs.map((slug: string) => `/issue/${slug}`);
-  return {
-    paths,
-    fallback: false,
   };
 }

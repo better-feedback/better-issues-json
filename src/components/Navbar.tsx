@@ -23,7 +23,7 @@ export const Header = (): JSX.Element => {
         </Link>
         <nav className="flex items-center justify-center ml-8 space-x-10 text-gray-600">
           <a
-            href="#"
+            href="/"
             className="text-sm font-semibold rounded-xl hover:text-better-black"
           >
             <svg
@@ -41,7 +41,7 @@ export const Header = (): JSX.Element => {
             <span className="hidden md:inline">Roadmap</span>
           </a>
           <a
-            href="#"
+            href="/issues"
             className="inline-flex text-sm font-semibold rounded-xl hover:text-better-black"
           >
             <svg

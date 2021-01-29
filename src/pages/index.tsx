@@ -1,5 +1,6 @@
 import IssueList from "../components/IssueList";
 import Layout from "../components/Layout";
+import { github } from "../utils/api";
 
 export const Home = (props): JSX.Element => {
   function filterByLabel(issues, labelValue: string) {
@@ -91,24 +92,18 @@ export const Home = (props): JSX.Element => {
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const siteConfig = await import(`../data/config.json`);
-  //get posts & context from folder
-  const items = ((context) => {
-    const keys = context.keys();
-    const values = keys.map(context);
 
-    const data = keys.map((key, index) => {
-      return {
-        ...(values[index] as Record<string, unknown>),
-      };
-    });
-    return data;
-  })(require.context("../../issues", true, /\.json$/));
+  const result = await github.issues.listForRepo({
+    owner: siteConfig.projectOrg,
+    repo: siteConfig.projectRepo,
+  });
 
+  const repoIssues = result.data;
   return {
     props: {
-      allItems: items,
+      allItems: repoIssues,
       siteTitle: siteConfig.default.title,
       description: siteConfig.default.description,
       projectRepo: siteConfig.default.repositoryUrl,
