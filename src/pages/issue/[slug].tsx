@@ -1,10 +1,75 @@
+import React, { useState } from "react";
+
 import Layout from "../../components/Layout";
 import IssueTags from "../../components/IssueTags";
 import ReactMarkdown from "react-markdown";
-// import { Octokit } from "@octokit/rest";
 import { github } from "../../utils/api";
 
 export const IssueTemplate = (props): JSX.Element => {
+  const likedIssues = JSON.parse(localStorage.getItem("likedIssues") || "[]");
+  const [didLike, setDidLike] = useState(
+    likedIssues.includes(props.issueData.number)
+  );
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClickLike = async () => {
+    try {
+      setDidLike(true);
+      setIsLoading(true);
+
+      await fetch(`/api/likes/${props.issueData.number}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          issueId: props.issueData.number,
+          like: true,
+        }),
+      });
+
+      localStorage.setItem(
+        "likedIssues",
+        JSON.stringify([...likedIssues, props.issueData.number])
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleClickDislike = async () => {
+    try {
+      setDidLike(false);
+      setIsLoading(true);
+
+      await fetch(`/api/likes/${props.issueData.number}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          issueId: props.issueData.number,
+          dislike: true,
+        }),
+      });
+
+      localStorage.setItem(
+        "likedIssues",
+        JSON.stringify(
+          likedIssues.filter(
+            (issueNumber) => issueNumber != props.issueData.number
+          )
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!props.issueData) return <>Error when fetching / rendering issue</>;
 
   return (
@@ -29,17 +94,39 @@ export const IssueTemplate = (props): JSX.Element => {
           </div>
           <div className="flex issue__sidebar-buttons">
             <div className="w-1/2 text-center bg-better-yellow rounded-bl-xl font-poppins">
-              <button className="w-full h-full p-4">
-                <svg
-                  className="inline w-6 h-6 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+              {didLike ? (
+                <button
+                  className="w-full h-full p-4"
+                  onClick={handleClickDislike}
+                  disabled={isLoading}
                 >
-                  <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                </svg>
-                <span className="font-bold align-middle">LIKE</span>
-              </button>
+                  <svg
+                    className="inline w-6 h-6 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                  </svg>
+                  <span className="font-bold align-middle">DISLIKE</span>
+                </button>
+              ) : (
+                <button
+                  className="w-full h-full p-4"
+                  onClick={handleClickLike}
+                  disabled={isLoading}
+                >
+                  <svg
+                    className="inline w-6 h-6 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                  </svg>
+                  <span className="font-bold align-middle">LIKE</span>
+                </button>
+              )}
             </div>
             <div className="w-1/2 text-center bg-better-green rounded-br-xl font-poppins">
               <button className="w-full h-full p-4">
