@@ -41,7 +41,9 @@ const IssueList = (props) => {
                               clipRule="evenodd"
                             />
                           </svg>
-                          <span className="align-middle">5</span>
+                          <span className="align-middle">
+                            {issue.likesCount || 0}
+                          </span>
                         </div>
                       </div>
                     </li>

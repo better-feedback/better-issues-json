@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import { github } from "../utils/api";
+import { getLikesOfManyIssues } from "../utils/db";
 import { getFirstMatchingLabel } from "../utils/issue";
 import { truncateText } from "../utils/text";
 import Link from "next/link";
@@ -113,9 +114,21 @@ export async function getServerSideProps() {
   });
 
   const repoIssues = result.data;
+
+  const issuesMetaData = await getLikesOfManyIssues(
+    repoIssues.map(({ number }) => number)
+  );
+
+  const enrichedIssues = repoIssues.map((repoIssue) => ({
+    ...repoIssue,
+    likesCount:
+      issuesMetaData.find((metaData) => metaData.id == repoIssue.number)
+        ?.likesCount || 0,
+  }));
+
   return {
     props: {
-      issues: repoIssues,
+      issues: enrichedIssues,
       siteTitle: siteConfig.default.title,
       description: siteConfig.default.description,
       projectRepo: siteConfig.default.repositoryUrl,
