@@ -1,6 +1,7 @@
 import IssueList from "../components/IssueList";
 import Layout from "../components/Layout";
 import { github } from "../utils/api";
+import { getLikesOfManyIssues } from "../utils/db";
 
 export const Home = (props): JSX.Element => {
   function filterByLabel(issues, labelValue: string) {
@@ -102,9 +103,21 @@ export async function getServerSideProps() {
   });
 
   const repoIssues = result.data;
+
+  const issuesMetaData = await getLikesOfManyIssues(
+    repoIssues.map(({ number }) => number)
+  );
+
+  const enrichedIssues = repoIssues.map((repoIssue) => ({
+    ...repoIssue,
+    likesCount:
+      issuesMetaData.find((metaData) => metaData.id == repoIssue.number)
+        ?.likesCount || 0,
+  }));
+
   return {
     props: {
-      allItems: repoIssues,
+      allItems: enrichedIssues,
       siteTitle: siteConfig.default.title,
       description: siteConfig.default.description,
       projectRepo: siteConfig.default.repositoryUrl,
