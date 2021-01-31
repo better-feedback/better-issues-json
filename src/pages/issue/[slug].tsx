@@ -1,73 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Layout from "../../components/Layout";
 import IssueTags from "../../components/IssueTags";
 import ReactMarkdown from "react-markdown";
 import { github } from "../../utils/api";
+import { useLikeIssue } from "../../hooks/issue";
 
 export const IssueTemplate = (props): JSX.Element => {
-  const likedIssues = JSON.parse(localStorage.getItem("likedIssues") || "[]");
-  const [didLike, setDidLike] = useState(
-    likedIssues.includes(props.issueData.number)
+  const { isValidating, likeIssue, dislikeIssue, didLike } = useLikeIssue(
+    props.issueData.number
   );
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickLike = async () => {
-    try {
-      setDidLike(true);
-      setIsLoading(true);
-
-      await fetch(`/api/likes/${props.issueData.number}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-        body: JSON.stringify({
-          issueId: props.issueData.number,
-          like: true,
-        }),
-      });
-
-      localStorage.setItem(
-        "likedIssues",
-        JSON.stringify([...likedIssues, props.issueData.number])
-      );
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await likeIssue();
   };
 
   const handleClickDislike = async () => {
-    try {
-      setDidLike(false);
-      setIsLoading(true);
-
-      await fetch(`/api/likes/${props.issueData.number}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-        body: JSON.stringify({
-          issueId: props.issueData.number,
-          dislike: true,
-        }),
-      });
-
-      localStorage.setItem(
-        "likedIssues",
-        JSON.stringify(
-          likedIssues.filter(
-            (issueNumber) => issueNumber != props.issueData.number
-          )
-        )
-      );
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await dislikeIssue();
   };
 
   if (!props.issueData) return <>Error when fetching / rendering issue</>;
@@ -98,7 +47,7 @@ export const IssueTemplate = (props): JSX.Element => {
                 <button
                   className="w-full h-full p-4"
                   onClick={handleClickDislike}
-                  disabled={isLoading}
+                  disabled={isValidating}
                 >
                   <svg
                     className="w-6 h-6"
@@ -120,7 +69,7 @@ export const IssueTemplate = (props): JSX.Element => {
                 <button
                   className="w-full h-full p-4"
                   onClick={handleClickLike}
-                  disabled={isLoading}
+                  disabled={isValidating}
                 >
                   <svg
                     className="inline w-6 h-6 mr-2"

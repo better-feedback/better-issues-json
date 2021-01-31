@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import {
-  likeIssue,
-  dislikeIssue,
-  getLikes,
-  disconnect,
-} from "../../../utils/db";
+import { likeIssue, dislikeIssue, getLikes } from "../../../utils/db";
 
 export default async function likesHandler(
   req: NextApiRequest,
@@ -19,7 +14,7 @@ export default async function likesHandler(
 
   switch (method) {
     case "GET": {
-      const { likesCount } = await getLikes(issueId);
+      const { likesCount = 0 } = (await getLikes(issueId)) || {};
       res.status(200).json({ issueId, likesCount });
       break;
     }
@@ -40,6 +35,4 @@ export default async function likesHandler(
       res.setHeader("Allow", ["GET", "PUT"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-
-  await disconnect();
 }
