@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  height: 100%;
+}
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: 100%;
+}
+
+::selection {
+  @apply bg-better-yellow text-better-black;
+}
+
 blockquote {
   @apply block p-2 pl-4 ml-1 text-xs bg-gray-100 border-l-4 border-gray-300;
 }
@@ -12,14 +26,4 @@ pre code {
 
 code {
   @apply px-1 py-0.5 text-xs bg-gray-100;
-}
-
-html,
-body {
-  height: 100%;
-}
-body > div:first-child,
-div#__next,
-div#__next > div {
-  height: 100%;
 }

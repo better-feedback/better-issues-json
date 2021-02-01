@@ -13,7 +13,7 @@ export const Issues = (props): JSX.Element => {
           <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-better-purple issue__main-title rounded-xl">
             All Issues
           </div>
-          <div className="">
+          <div>
             <div className="flex">
               <div className="-my-2 overflow-x-auto">
                 <div className="inline-block min-w-full py-2 align-middle">
