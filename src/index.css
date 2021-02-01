@@ -27,3 +27,14 @@ pre code {
 code {
   @apply px-1 py-0.5 text-xs bg-gray-100;
 }
+
+html,
+body {
+  @apply h-full;
+}
+
+body > div:first-child,
+div#__next,
+div#__next > div {
+  @apply h-full;
+}
