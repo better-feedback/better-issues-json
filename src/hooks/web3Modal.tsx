@@ -23,6 +23,12 @@ export function useWeb3Modal() {
     ethers.providers.Web3Provider | undefined
   >();
 
+  // Automatically connect if the provider is cashed but has not yet
+  // been set (e.g. page refresh)
+  if (web3Modal.cachedProvider && !provider) {
+    connectWallet();
+  }
+
   async function connectWallet() {
     const externalProvider = await web3Modal.connect();
     const ethersProvider = new ethers.providers.Web3Provider(externalProvider);

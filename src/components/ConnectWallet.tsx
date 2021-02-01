@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Blockies from "react-blockies";
 
 import { useWeb3Modal } from "../hooks/web3Modal";
+
+const truncateAddress = (address: string): string => {
+  return address.slice(0, 6) + "..." + address.slice(-4);
+};
 
 export default function ConnectWallet() {
   const [signerAddress, setSignerAddress] = useState<string>("");
@@ -25,11 +30,28 @@ export default function ConnectWallet() {
 
   return (
     <button
-      className="flex h-6 ml-3 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+      className="flex items-center py-0.5 text-sm font-medium text-gray-600 bg-better-purple rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
       aria-haspopup="true"
       onClick={signerAddress ? handleClickAddress : handleClickConnect}
+      title={signerAddress ? "Click to Disconnect" : "Click to Connect"}
     >
-      {signerAddress || "Connect Wallet"}
+      {signerAddress && (
+        <div className="rounded-full border-better-white mx-1 my-0.5">
+          <Blockies
+            className="rounded-full"
+            seed={signerAddress.toLowerCase()}
+            size={8}
+            scale={3}
+          />
+        </div>
+      )}
+      <div
+        className={`mr-3 ${
+          !signerAddress && "ml-3"
+        } align-middle text-better-violet`}
+      >
+        {signerAddress ? truncateAddress(signerAddress) : "Connect Wallet"}
+      </div>
     </button>
   );
 }

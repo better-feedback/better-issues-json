@@ -38,14 +38,14 @@ export const Header = (): JSX.Element => {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="hidden md:inline">Roadmap</span>
+            <span className="hidden align-middle md:inline">Roadmap</span>
           </a>
           <a
             href="/issues"
-            className="inline-flex text-sm font-semibold rounded-xl hover:text-better-black"
+            className="text-sm font-semibold rounded-xl hover:text-better-black"
           >
             <svg
-              className="w-6 h-6"
+              className="inline-flex w-6 h-6 mr-2"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ export const Header = (): JSX.Element => {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="hidden md:inline">Issues</span>
+            <span className="hidden align-middle md:inline">Issues</span>
           </a>
         </nav>
         <div className="flex items-center ml-auto">
