@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useSWR, { mutate } from "swr";
 
 const IS_SERVER = typeof window === "undefined";
@@ -17,17 +17,9 @@ export function useLikeIssue(issueId: string) {
     fetcher
   );
 
-  useEffect(() => {
-    if (data?.likesCount && !IS_SERVER) {
-      localStorage.setItem(
-        "likedIssues",
-        JSON.stringify([...likedIssues, issueId])
-      );
-    }
-  }, [data, likedIssues, issueId]);
-
   async function likeIssue() {
     setDidLike(true);
+    data.likesCount += 1;
     await mutate(`/api/likes/${issueId}`, async () => {
       const updatedIssue = await fetch(`/api/likes/${issueId}`, {
         headers: {
@@ -52,6 +44,7 @@ export function useLikeIssue(issueId: string) {
 
   async function dislikeIssue() {
     setDidLike(false);
+    data.likesCount -= 1;
     await mutate(`/api/likes/${issueId}`, async () => {
       const updatedIssue = await fetch(`/api/likes/${issueId}`, {
         headers: {
@@ -77,6 +70,7 @@ export function useLikeIssue(issueId: string) {
   }
 
   return {
+    data,
     didLike,
     likeIssue,
     dislikeIssue,
