@@ -13,7 +13,7 @@
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test",
     "hardhat:node": "hardhat node",
-    "contracts:deploy": "hardhat run ./scripts/deploy.js localhost"
+    "contracts:deploy": "hardhat run ./scripts/deploy.js --network localhost"
   },
   "husky": {
     "hooks": {

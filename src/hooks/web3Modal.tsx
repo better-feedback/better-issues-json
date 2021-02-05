@@ -28,7 +28,7 @@ export function useWeb3Modal() {
 
   // Automatically connect if the provider is cashed but has not yet
   // been set (e.g. page refresh)
-  if (web3Modal.cachedProvider && !provider) {
+  if (web3Modal?.cachedProvider && !provider) {
     connectWallet();
   }
 

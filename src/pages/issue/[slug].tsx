@@ -47,14 +47,11 @@ export const IssueTemplate = (props): JSX.Element => {
               <span className="block text-xs font-medium uppercase text-better-black">
                 Total funded
               </span>
+              <div>{ethers.utils.formatEther(bounty?.balance || 0)} ETH</div>
               <div>Funded in USER_CURR, click for details</div>
             </div>
 
             <div className="py-2">
-              <div>
-                Current funds: {ethers.utils.formatEther(bounty?.balance || 0)}{" "}
-                ETH
-              </div>
               <span className="text-xs font-medium uppercase text-better-black">
                 Funding goal
               </span>
