@@ -1,15 +1,20 @@
 import React from "react";
+import { ethers } from "ethers";
+
 import Layout from "../../components/Layout";
 import IssueTags from "../../components/IssueTags";
 import ReactMarkdown from "react-markdown";
 import { formatDate } from "../../utils/text";
 import { github } from "../../utils/api";
 import { useLikeIssue } from "../../hooks/issue";
+import { useIssueAndContribute, useBounty } from "../../hooks/bountiesContract";
 
 export const IssueTemplate = (props): JSX.Element => {
   const { data, isValidating, likeIssue, dislikeIssue, didLike } = useLikeIssue(
     props.issueData.number
   );
+  const { bounty, fetchBounty } = useBounty(props.issueData.number);
+  const { issueAndContribute, txStatus } = useIssueAndContribute();
 
   const handleClickLike = async () => {
     await likeIssue();
@@ -17,6 +22,12 @@ export const IssueTemplate = (props): JSX.Element => {
 
   const handleClickDislike = async () => {
     await dislikeIssue();
+  };
+
+  const handleClickFund = async () => {
+    // TODO: open modal with parameters
+    await issueAndContribute(props.issueData.number, 1);
+    await fetchBounty();
   };
 
   if (!props.issueData) return <>Error when fetching / rendering issue</>;
@@ -37,6 +48,7 @@ export const IssueTemplate = (props): JSX.Element => {
               <span className="block text-xs font-medium uppercase text-better-black">
                 Total funded
               </span>
+              <div>{ethers.utils.formatEther(bounty?.balance || 0)} ETH</div>
               <div>Funded in USER_CURR, click for details</div>
             </div>
 
@@ -117,7 +129,11 @@ export const IssueTemplate = (props): JSX.Element => {
               )}
             </div>
             <div className="w-1/2 text-center bg-better-green rounded-br-xl font-poppins">
-              <button className="w-full h-full p-4">
+              <button
+                className="w-full h-full p-4"
+                onClick={handleClickFund}
+                disabled={txStatus === "pending"}
+              >
                 <svg
                   className="inline w-6 h-6 mr-2"
                   fill="currentColor"

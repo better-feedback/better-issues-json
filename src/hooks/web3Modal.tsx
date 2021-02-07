@@ -3,6 +3,8 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
+const IS_SERVER = typeof window === "undefined";
+
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
@@ -12,11 +14,12 @@ const providerOptions = {
   },
 };
 
-const web3Modal = new Web3Modal({
-  network: "mainnet",
-  cacheProvider: true,
-  providerOptions,
-});
+const web3Modal = IS_SERVER
+  ? null
+  : new Web3Modal({
+      cacheProvider: true,
+      providerOptions,
+    });
 
 export function useWeb3Modal() {
   const [provider, setProvider] = useState<
@@ -25,19 +28,27 @@ export function useWeb3Modal() {
 
   // Automatically connect if the provider is cashed but has not yet
   // been set (e.g. page refresh)
-  if (web3Modal.cachedProvider && !provider) {
+  if (web3Modal?.cachedProvider && !provider) {
     connectWallet();
   }
 
   async function connectWallet() {
-    const externalProvider = await web3Modal.connect();
+    if (IS_SERVER) {
+      return;
+    }
+
+    const externalProvider = await web3Modal?.connect();
     const ethersProvider = new ethers.providers.Web3Provider(externalProvider);
 
     setProvider(ethersProvider);
   }
 
   function disconnectWallet() {
-    web3Modal.clearCachedProvider();
+    if (IS_SERVER) {
+      return;
+    }
+
+    web3Modal?.clearCachedProvider();
     setProvider(undefined);
   }
 
