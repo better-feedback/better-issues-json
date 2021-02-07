@@ -1,6 +1,6 @@
 export const Footer = (): JSX.Element => {
   return (
-    <div className="w-full h-40 pb-8 mt-auto text-xs text-gray-500 bg-gradient-to-b to-gray-300 from-gray-100">
+    <div className="w-full h-40 pb-8 mt-auto text-xs text-gray-500 bg-gradient-to-b to-gray-200 from-gray-100">
       <div className="grid grid-cols-3">
         <div className="pl-8">Powered by Better © 2021</div>
         <div className="pl-8">

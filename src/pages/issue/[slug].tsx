@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout";
 import IssueTags from "../../components/IssueTags";
 import ReactMarkdown from "react-markdown";
+import { formatDate } from "../../utils/text";
 import { github } from "../../utils/api";
 import { useLikeIssue } from "../../hooks/issue";
 
@@ -169,9 +170,19 @@ export const IssueTemplate = (props): JSX.Element => {
           <div className="text-gray-800 issue__body">
             <ReactMarkdown>{props.issueData.body}</ReactMarkdown>
           </div>
-          <div className="my-3 space-x-2">
+          <div className="my-3">
             <hr className="mb-2" />
             <IssueTags tags={props.issueData.labels} />
+          </div>
+          <div className="flex flex-row justify-between px-1 text-xs text-gray-400">
+            <div className="w-1/2">
+              <div className="font-medium uppercase">Created</div>
+              <div>{formatDate(props.issueData.created_at)}</div>
+            </div>
+            <div className="w-1/2 text-right">
+              <div className="block font-medium uppercase">Modified</div>
+              <div>{formatDate(props.issueData.updated_at)}</div>
+            </div>
           </div>
         </div>
       </div>

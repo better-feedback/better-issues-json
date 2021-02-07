@@ -1,3 +1,4 @@
+import Link from "next/link";
 import IssueList from "../components/IssueList";
 import Layout from "../components/Layout";
 import { github } from "../utils/api";
@@ -18,8 +19,16 @@ export const Home = (props): JSX.Element => {
     <Layout siteTitle={props.siteTitle}>
       <div className="grid w-5/6 grid-cols-1 gap-6 mt-10 mb-20 text-gray-800 md:grid-cols-2 xl:grid-cols-3 issue rounded-x5">
         <div className="p-6 bg-white shadow-xl rounded-xl xl:col-span-2">
-          &quot;feed style&quot; new issues here (filter by issue &quot;Status:
-          Open&quot;)
+          {filterByLabel(props.allItems, "status: in progress").map((issue) => (
+            <div key={issue.number}>
+              <Link
+                key={issue.id}
+                href={{ pathname: `/issue/${issue.number}` }}
+              >
+                {issue.title}
+              </Link>
+            </div>
+          ))}
         </div>
         <a
           href={`${props.projectRepo}/issues/new/choose`}
