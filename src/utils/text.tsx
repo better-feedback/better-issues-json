@@ -4,3 +4,8 @@ export const truncateText = (content: string, length = 200): string => {
   }
   return content;
 };
+
+export const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toDateString().slice(4);
+};

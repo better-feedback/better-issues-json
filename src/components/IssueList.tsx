@@ -3,11 +3,6 @@ import { truncateText } from "../utils/text";
 import { getFirstMatchingLabel } from "../utils/issue";
 
 const IssueList = (props) => {
-  // function reformatDate(fullDate) {
-  //   const date = new Date(fullDate);
-  //   return date.toDateString().slice(4);
-  // }
-
   return (
     <>
       <ul>
