@@ -1,11 +1,11 @@
 {
-  "name": "nextjs-typescript-tailwind-eslint-jest",
-  "author": "RazerMoon",
+  "name": "better subsite",
+  "author": "betterhq",
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
