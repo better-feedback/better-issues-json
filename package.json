@@ -13,12 +13,6 @@
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run type-check"
-    }
-  },
   "lint-staged": {
     "*.@(ts|tsx)": [
       "yarn lint",
@@ -42,7 +36,6 @@
   "devDependencies": {
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.19",
-    "@types/next-auth": "^3.15.0",
     "@types/node": "^14.14.14",
     "@types/react": "^17.0.0",
     "@types/webpack-env": "^1.16.0",
