@@ -1,8 +1,8 @@
 {
-  "name": "nextjs-typescript-tailwind-eslint-jest",
-  "author": "RazerMoon",
-  "license": "MIT",
-  "version": "1.0.0",
+  "name": "Better",
+  "author": "BetterHQ",
+  "license": "",
+  "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -31,6 +31,7 @@
     "ethers": "^5.0.26",
     "mongodb": "^3.6.3",
     "next": "latest",
+    "next-auth": "^3.29.0",
     "react": "^17.0.1",
     "react-blockies": "^1.4.1",
     "react-dom": "^17.0.1",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.19",
+    "@types/next-auth": "^3.15.0",
     "@types/node": "^14.14.14",
     "@types/react": "^17.0.0",
     "@types/webpack-env": "^1.16.0",
