@@ -3,6 +3,7 @@ import IssueList from "../components/IssueList";
 import Layout from "../components/Layout";
 import { github } from "../utils/api";
 import { getLikesOfManyIssues } from "../utils/db";
+import { signIn, signOut, useSession } from "next-auth/client";
 
 export const Home = (props): JSX.Element => {
   function filterByLabel(issues, labelValue: string) {
@@ -15,8 +16,16 @@ export const Home = (props): JSX.Element => {
     });
   }
 
+  const [session, loading] = useSession()
+
   return (
     <Layout siteTitle={props.siteTitle}>
+      {session && (
+        <>asdadsf</>
+      )}
+      {!session && (
+        <>no session</>
+      )}
       <div className="grid w-5/6 grid-cols-1 gap-6 mt-10 mb-20 text-gray-800 md:grid-cols-2 xl:grid-cols-3 issue rounded-x5">
         <div className="p-6 bg-white shadow-xl rounded-xl xl:col-span-2">
           {filterByLabel(props.allItems, "status: in progress").map((issue) => (

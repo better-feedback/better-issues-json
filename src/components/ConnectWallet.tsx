@@ -30,7 +30,7 @@ export default function ConnectWallet() {
 
   return (
     <button
-      className="flex items-center py-0.5 text-sm font-medium text-gray-600 bg-better-purple rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+      className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
       aria-haspopup="true"
       onClick={signerAddress ? handleClickAddress : handleClickConnect}
       title={signerAddress ? "Click to Disconnect" : "Click to Connect"}
