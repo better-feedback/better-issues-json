@@ -8,28 +8,39 @@ interface Props {
   status: IssueStatus
 }
 
-const getBorderColor = (status: IssueStatus) => {
+const getSetting = (status: IssueStatus) => {
   switch (status) {
     case IssueStatus.Planned:
-      return 'border-blue-100'
+      return {
+        color: 'border-blue-100',
+        title: 'Planned',
+      }
     case IssueStatus.InProgress:
-      return 'border-yellow-100'
+      return {
+        color: 'border-yellow-100',
+        title: 'In Progress',
+      }
     case IssueStatus.Completed:
-      return 'border-green-100'
+      return {
+        color: 'border-green-100',
+        title: 'Completed',
+      }
     default:
-      return ''
+      return {
+        color: '',
+        title: '',
+      }
   }
 }
 
 const IssueList = ({ issues, status }: Props) => {
+  const { color, title } = getSetting(status)
   return (
     <div className="relative flex-row self-start bg-white shadow-lg rounded-xl">
       <div
-        className={`block w-full p-4 mb-2 text-xl font-medium border-t-8 ${getBorderColor(
-          status
-        )} issue__main-title rounded-xl`}
+        className={`block w-full p-4 mb-2 text-xl font-medium border-t-8 ${color} issue__main-title rounded-xl`}
       >
-        Planned
+        {title}
       </div>
       <div className="p-4 pt-0">
         <>
