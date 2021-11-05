@@ -6,9 +6,11 @@ export default function ConnectWallet() {
   const [address, setAddress] = useState<string>('')
 
   useEffect(() => {
-    getAccount().then((account) => {
-      setAddress(account.accountId)
-    })
+    getAccount()
+      .then((account) => {
+        setAddress(account.accountId)
+      })
+      .catch((error) => {})
   }, [])
 
   return (
@@ -16,7 +18,8 @@ export default function ConnectWallet() {
       className="flex items-center py-0.5 text-sm font-medium text-gray-600 bg-better-purple rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
       aria-haspopup="true"
       onClick={async () => {
-        connectWallet().then((account) => setAddress(account.accountId))
+        !address &&
+          connectWallet().then((account) => setAddress(account.accountId))
       }}
     >
       {address && (

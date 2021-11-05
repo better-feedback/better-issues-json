@@ -2,7 +2,7 @@ import { connect, keyStores, WalletConnection } from 'near-api-js'
 import { getConfig } from './config'
 
 const getNearWallet = async () => {
-  const nearConfig = getConfig('testnet')
+  const nearConfig = getConfig('mainnet')
   const near = await connect({
     ...nearConfig,
     keyStore: new keyStores.BrowserLocalStorageKeyStore(),
@@ -22,7 +22,7 @@ export const getAccount = async () => {
 export const connectWallet = async () => {
   const wallet = await getNearWallet()
   wallet.requestSignIn(
-    'example-contract.testnet', // contract requesting access
+    'better.near', // contract requesting access
     'Better' // optional
     // "http://YOUR-URL.com/success", // optional
     // "http://YOUR-URL.com/failure" // optional
