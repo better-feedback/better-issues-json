@@ -1,25 +1,21 @@
-import Link from "next/link";
-import IssueList from "../components/IssueList";
-import Layout from "../components/Layout";
-import { github } from "../utils/api";
-import { getLikesOfManyIssues } from "../utils/db";
+import Link from 'next/link'
+import { Issue, IssueStatus } from '../../types'
+import IssueList from '../components/Issue/List'
+import Layout from '../components/Layout'
+import { github } from '../utils/api'
+import { filterByLabel } from '../utils/issue'
 
-export const Home = (props): JSX.Element => {
-  function filterByLabel(issues, labelValue: string) {
-    return issues.filter((issue) => {
-      if (issue.labels.length > 0) {
-        return issue.labels.some((label) => {
-          return label.name === labelValue;
-        });
-      }
-    });
-  }
+interface Props {
+  issues: Issue[]
+  repo: string
+}
 
+export const Home = ({ issues, repo }: Props): JSX.Element => {
   return (
-    <Layout siteTitle={props.siteTitle}>
-      <div className="grid w-5/6 grid-cols-1 gap-6 mt-10 mb-20 text-gray-800 md:grid-cols-2 xl:grid-cols-3 issue rounded-x5">
+    <Layout subtitle="Home">
+      <div className="grid w-5/6 grid-cols-1 gap-6 mt-5 mb-5 text-gray-800 md:grid-cols-2 xl:grid-cols-3 issue rounded-x5">
         <div className="p-6 bg-white shadow-xl rounded-xl xl:col-span-2">
-          {filterByLabel(props.allItems, "status: in progress").map((issue) => (
+          {filterByLabel(issues, IssueStatus.InProgress).map((issue) => (
             <div key={issue.number}>
               <Link
                 key={issue.id}
@@ -30,11 +26,7 @@ export const Home = (props): JSX.Element => {
             </div>
           ))}
         </div>
-        <a
-          href={`${props.projectRepo}/issues/new/choose`}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href={`${repo}/issues/new/choose`} target="_blank" rel="noreferrer">
           <div
             className="relative h-48 p-6 overflow-hidden bg-white shadow-xl rounded-xl"
             style={{
@@ -62,74 +54,43 @@ export const Home = (props): JSX.Element => {
           </div>
         </a>
       </div>
-      <div className="grid w-5/6 grid-cols-1 gap-4 text-gray-800 md:grid-cols-3 issue rounded-xl">
-        <div className="relative flex-row self-start bg-white shadow-lg rounded-xl">
-          <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-blue-100 issue__main-title rounded-xl">
-            Planned
-          </div>
-          <div className="p-4 pt-0">
-            <IssueList
-              issues={filterByLabel(props.allItems, "status: planned")}
-            />
-          </div>
-        </div>
+      <div className="grid w-5/6 grid-cols-1 gap-8 text-gray-800 md:grid-cols-3 issue rounded-xl">
+        <IssueList
+          issues={filterByLabel(issues, IssueStatus.Planned)}
+          status={IssueStatus.Planned}
+        />
 
-        <div className="flex-row self-start bg-white shadow-lg rounded-xl">
-          <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-yellow-200 issue__main-title rounded-xl">
-            In Progress
-          </div>
-          <div className="p-4 pt-0">
-            <IssueList
-              issues={filterByLabel(props.allItems, "status: in progress")}
-            />
-          </div>
-        </div>
+        <IssueList
+          issues={filterByLabel(issues, IssueStatus.InProgress)}
+          status={IssueStatus.InProgress}
+        />
 
-        <div className="flex-row self-start bg-white shadow-lg rounded-xl">
-          <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-green-200 issue__main-title rounded-xl">
-            Completed
-          </div>
-          <div className="p-4 pt-0">
-            <IssueList
-              issues={filterByLabel(props.allItems, "status: completed")}
-            />
-          </div>
-        </div>
+        <IssueList
+          issues={filterByLabel(issues, IssueStatus.Completed)}
+          status={IssueStatus.Completed}
+        />
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 export async function getServerSideProps() {
-  const siteConfig = await import(`../data/config.json`);
+  const siteConfig = await import(`../config/better.json`)
 
   const result = await github.issues.listForRepo({
     owner: siteConfig.projectOrg,
     repo: siteConfig.projectRepo,
-    state: "all",
-  });
+    state: 'all',
+  })
 
-  const repoIssues = result.data;
-
-  const issuesMetaData = await getLikesOfManyIssues(
-    repoIssues.map(({ number }) => number)
-  );
-
-  const enrichedIssues = repoIssues.map((repoIssue) => ({
-    ...repoIssue,
-    likesCount:
-      issuesMetaData.find((metaData) => metaData.id == repoIssue.number)
-        ?.likesCount || 0,
-  }));
+  const issues = result.data
 
   return {
     props: {
-      allItems: enrichedIssues,
-      siteTitle: siteConfig.default.title,
-      description: siteConfig.default.description,
-      projectRepo: siteConfig.default.repositoryUrl,
+      issues,
+      repo: siteConfig.default.repositoryUrl,
     },
-  };
+  }
 }

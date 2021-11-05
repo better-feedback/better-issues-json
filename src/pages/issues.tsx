@@ -1,13 +1,18 @@
-import Layout from "../components/Layout";
-import { github } from "../utils/api";
-import { getLikesOfManyIssues } from "../utils/db";
-import { getFirstMatchingLabel } from "../utils/issue";
-import { truncateText } from "../utils/text";
-import Link from "next/link";
+import Layout from '../components/Layout'
+import { github } from '../utils/api'
+import { getFirstMatchingLabel } from '../utils/issue'
+import { truncateText } from '../utils/text'
+import Link from 'next/link'
+import { Issue } from '../../types'
 
-export const Issues = (props): JSX.Element => {
+interface Props {
+  issues: Issue[]
+  repo: string
+}
+
+export const Issues = ({ issues, repo }): JSX.Element => {
   return (
-    <Layout siteTitle={props.siteTitle}>
+    <Layout subtitle="Issues">
       <div className="mt-10 text-gray-800 issue rounded-xl">
         <div className="relative flex-row self-start bg-white shadow-lg rounded-xl">
           <div className="block w-full p-4 mb-2 text-xl font-medium border-t-8 border-better-purple issue__main-title rounded-xl">
@@ -42,53 +47,52 @@ export const Issues = (props): JSX.Element => {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {props.issues.length > 0 &&
-                          props.issues.map(
-                            (issue) =>
-                              !issue.pull_request && (
-                                <tr key={issue.id}>
-                                  <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-semibold">
-                                      <Link
-                                        key={issue.id}
-                                        href={{
-                                          pathname: `/issue/${issue.number}`,
-                                        }}
-                                      >
-                                        {truncateText(issue.title, 180)}
-                                      </Link>
+                        {issues.map(
+                          (issue) =>
+                            !issue.pull_request && (
+                              <tr key={issue.id}>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <div className="text-sm font-semibold">
+                                    <Link
+                                      key={issue.id}
+                                      href={{
+                                        pathname: `/issue/${issue.number}`,
+                                      }}
+                                    >
+                                      {truncateText(issue.title, 180)}
+                                    </Link>
+                                  </div>
+                                  <div className="flex justify-between mt-1 text-xs font-medium text-gray-400 uppercase">
+                                    <div>
+                                      {getFirstMatchingLabel(
+                                        issue.labels,
+                                        'type:'
+                                      )}
                                     </div>
-                                    <div className="flex justify-between mt-1 text-xs font-medium text-gray-400 uppercase">
-                                      <div>
-                                        {getFirstMatchingLabel(
-                                          issue.labels,
-                                          "type:"
-                                        )}
-                                      </div>
-                                      <div className="relative w-1/3">
-                                        <div className="flex h-2 mb-4 overflow-hidden text-xs rounded bg-better-red bg-opacity-20">
-                                          <div
-                                            style={{ width: "30%" }}
-                                            className="flex flex-col justify-center text-center text-white shadow-none bg-better-red bg-opacity-40 whitespace-nowrap"
-                                          ></div>
-                                        </div>
+                                    <div className="relative w-1/3">
+                                      <div className="flex h-2 mb-4 overflow-hidden text-xs rounded bg-better-red bg-opacity-20">
+                                        <div
+                                          style={{ width: '30%' }}
+                                          className="flex flex-col justify-center text-center text-white shadow-none bg-better-red bg-opacity-40 whitespace-nowrap"
+                                        ></div>
                                       </div>
                                     </div>
-                                  </td>
-                                  <td className="px-6 py-4 text-xs font-medium text-gray-500 capitalize whitespace-nowrap">
-                                    {getFirstMatchingLabel(
-                                      issue.labels,
-                                      "status:"
-                                    )}
-                                  </td>
-                                  <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className="inline-flex px-2 text-xs font-medium text-gray-500 capitalize rounded-full">
-                                      {issue.state}
-                                    </span>
-                                  </td>
-                                </tr>
-                              )
-                          )}
+                                  </div>
+                                </td>
+                                <td className="px-6 py-4 text-xs font-medium text-gray-500 capitalize whitespace-nowrap">
+                                  {getFirstMatchingLabel(
+                                    issue.labels,
+                                    'status:'
+                                  )}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <span className="inline-flex px-2 text-xs font-medium text-gray-500 capitalize rounded-full">
+                                    {issue.state}
+                                  </span>
+                                </td>
+                              </tr>
+                            )
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -99,39 +103,24 @@ export const Issues = (props): JSX.Element => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Issues;
+export default Issues
 
 export async function getServerSideProps() {
-  const siteConfig = await import(`../data/config.json`);
+  const siteConfig = await import(`../config/better.json`)
 
   const result = await github.issues.listForRepo({
     owner: siteConfig.projectOrg,
     repo: siteConfig.projectRepo,
-    state: "all",
-  });
-
-  const repoIssues = result.data;
-
-  const issuesMetaData = await getLikesOfManyIssues(
-    repoIssues.map(({ number }) => number)
-  );
-
-  const enrichedIssues = repoIssues.map((repoIssue) => ({
-    ...repoIssue,
-    likesCount:
-      issuesMetaData.find((metaData) => metaData.id == repoIssue.number)
-        ?.likesCount || 0,
-  }));
+    state: 'all',
+  })
 
   return {
     props: {
-      issues: enrichedIssues,
-      siteTitle: siteConfig.default.title,
-      description: siteConfig.default.description,
-      projectRepo: siteConfig.default.repositoryUrl,
+      issues: result.data,
+      repo: siteConfig.default.repositoryUrl,
     },
-  };
+  }
 }

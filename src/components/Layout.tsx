@@ -1,16 +1,22 @@
-import Header from "./Header";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Header from './Header'
+import Navbar from './Navbar'
+import Footer from './Footer'
+import config from '../config/better.json'
 
-export default function Layout(props) {
+interface Props {
+  subtitle: string
+  children: React.ReactNode
+}
+
+export default function Layout({ subtitle, children }: Props) {
   return (
     <div className="flex flex-col antialiased bg-gray-100 v-full">
-      <Header siteTitle={props.siteTitle} />
+      <Header siteTitle={`${config.title} | ${subtitle}`} />
       <Navbar />
       <div className="flex flex-wrap items-center justify-center pb-16 bg-gray-100 content">
-        {props.children}
+        {children}
       </div>
       <Footer />
     </div>
-  );
+  )
 }
