@@ -65,7 +65,7 @@ const IssueList = ({ issues, status }: Props) => {
                                 />
                               </svg>
                               <span className="align-middle">
-                                {issue.likesCount || 0}
+                                {issue?.likesCount || 0}
                               </span>
                             </div>
                           </div>

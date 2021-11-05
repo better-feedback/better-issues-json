@@ -34,4 +34,5 @@ export type Issue = {
   labels: IssueLabel[]
   user: User
   pull_request?: string
+  likesCount?: number
 }
