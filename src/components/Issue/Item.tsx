@@ -1,7 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import { Issue } from '../../../types'
 import { formatDate } from '../../utils/text'
-import { useLikeIssue } from '../../hooks/issue'
 import IssueTags from './Tags'
 import { useEffect, useState } from 'react'
 import { getContract, getAccount } from '../../utils/near'
@@ -13,6 +12,7 @@ interface Props {
 export default function IssueItem({ issue }: Props) {
   const [likes, setLikes] = useState<string[]>([])
   const [address, setAddress] = useState<string>('')
+  const [isLiking, setIsLiking] = useState<boolean>(false)
 
   useEffect((): void => {
     getAccount()
@@ -23,7 +23,6 @@ export default function IssueItem({ issue }: Props) {
 
     getContract().then((contract: any) => {
       contract.getIssueLikes({ issueId: `${issue.id}` }).then((likes) => {
-        console.log(likes)
         setLikes(likes)
       })
     })
@@ -32,43 +31,30 @@ export default function IssueItem({ issue }: Props) {
   const didLike = likes.includes(address)
 
   const handleClickLike = async () => {
-    getContract().then((contract: any) => {
-      contract.likeIssue({ issueId: `${issue.id}` }).then(() => {
-        console.log('liked')
+    setIsLiking(true)
+    getContract()
+      .then((contract: any) => {
+        contract.likeIssue({ issueId: `${issue.id}` }).then(() => {
+          setIsLiking(false)
+          setLikes([...likes, address])
+        })
       })
-    })
+      .catch((error) => {
+        setIsLiking(false)
+      })
   }
 
   return (
     <div className="flex items-start w-5/6 space-x-6 text-gray-800 issue rounded-xl">
       <div className="w-1/3 bg-white shadow-lg issue rounded-xl">
-        <div className="p-6 space-y-5 text-sm text-gray-600">
+        <div className="p-6 space-y-5 text-gray-600">
           <div>
             <span className="block text-xs font-medium uppercase text-better-black">
               Popularity
             </span>
-            {likes.length}
-          </div>
-
-          <div>
-            <span className="block text-xs font-medium uppercase text-better-black">
-              Total funded
+            <span className="block font-5xl uppercase text-better-black">
+              {likes.length}
             </span>
-            <div>Funded in USER_CURR, click for details</div>
-          </div>
-
-          <div className="py-2">
-            <span className="text-xs font-medium uppercase text-better-black">
-              Funding goal
-            </span>
-            <div className="relative">
-              <div className="flex h-2 mx-2 mb-4 overflow-hidden text-xs bg-pink-200 rounded">
-                <div
-                  style={{ width: '30%' }}
-                  className="flex flex-col justify-center text-center text-white shadow-none bg-better-red whitespace-nowrap"
-                ></div>
-              </div>
-            </div>
           </div>
 
           <div>
@@ -94,6 +80,27 @@ export default function IssueItem({ issue }: Props) {
 
           <div>
             <span className="block text-xs font-medium uppercase text-better-black">
+              Total funded
+            </span>
+            <div>Funded in USER_CURR, click for details</div>
+          </div>
+
+          {/* <div className="py-2">
+            <span className="text-xs font-medium uppercase text-better-black">
+              Funding goal
+            </span>
+            <div className="relative">
+              <div className="flex h-2 mx-2 mb-4 overflow-hidden text-xs bg-pink-200 rounded">
+                <div
+                  style={{ width: '30%' }}
+                  className="flex flex-col justify-center text-center text-white shadow-none bg-better-red whitespace-nowrap"
+                ></div>
+              </div>
+            </div>
+          </div> */}
+
+          <div>
+            <span className="block text-xs font-medium uppercase text-better-black">
               Funders
             </span>
           </div>
@@ -102,11 +109,13 @@ export default function IssueItem({ issue }: Props) {
           <div className="w-1/2 text-center bg-better-yellow rounded-bl-xl font-poppins">
             <button
               className={`w-full h-full p-4 ${didLike && 'cursor-not-allowed'}`}
-              onClick={handleClickLike}
-              disabled={!didLike}
+              onClick={() => !isLiking && handleClickLike()}
+              disabled={didLike || isLiking}
             >
               <svg
-                className="inline w-6 h-6 mx-2"
+                className={`${
+                  isLiking ? 'animate-ping' : ''
+                } inline w-6 h-6 mx-2`}
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
