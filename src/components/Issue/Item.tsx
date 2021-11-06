@@ -4,6 +4,7 @@ import { formatDate } from '../../utils/text'
 import IssueTags from './Tags'
 import { useEffect, useState } from 'react'
 import { getContract, getAccount } from '../../utils/near'
+import remarkGfm from 'remark-gfm'
 
 interface Props {
   issue: Issue
@@ -179,7 +180,7 @@ export default function IssueItem({ issue }: Props) {
         </div>
 
         <div className="text-gray-800 issue__body">
-          <ReactMarkdown>{issue.body}</ReactMarkdown>
+          <ReactMarkdown children={issue.body} plugins={[remarkGfm]} />
         </div>
         <div className="my-3">
           <hr className="mb-2" />
